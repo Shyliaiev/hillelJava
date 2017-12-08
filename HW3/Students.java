@@ -8,30 +8,24 @@ import java.lang.*;
 public class Students {
     public static void main(String[] args) {
         int number;
-        String[][] Group = new String [0][101];
+        String[][] Group;
+        Group = new String [0][101];
         while (true){
-            System.out.print("What do you want to do:\n 1. Add new group.\n 2. Add new student.\n 3. Remove student." +
-                    "\n 4. Exit \n~");
+            System.out.print("What do you want to do:\n 1. Add new student.\n 2. Remove student." +
+                    "\n 3. Exit \n~");
             number=intInput();
             switch (number) {
                 case 1:
-                    System.out.println("You currently have " + Group.length + " group(s).");
-                    Group = newGroup(Group);
+                    System.out.println("You have "+Group.length+" students in "+numberOfGroups(Group)+" groups.");
+                    Group = newStudent(Group);
                     System.out.println("Operation successful.");
                     break;
                 case 2:
                     System.out.print("You have "+Group.length+" group(s). To which one do you want to add student?\n~ ");
-                    //Group = newStudent(Group);
-                    System.out.println("Operation successful.");
-                    break;
-                case 3:
-                    System.out.print("You have "+Group.length+" group(s). To which one do you want to add student?\n~ ");
                     //Group = removeStudent(Group);
                     System.out.println("Operation successful.");
                     break;
-
-
-                case 4:
+                case 3:
                     System.out.println("Program stopped by user.");
                     System.exit(1);                         //выход из программы
                     break;
@@ -43,19 +37,60 @@ public class Students {
         }
     }
 
-    private static String[][] newGroup(String data[][]) {
+    private static String[][] newStudent(String data[][]) {
         int number;
-        System.out.println("Please, input, how many groups you want to add:");
-        while (true){
-            number = intInput();
-            if (number<0) {
-                System.out.println("Please enter positive number.");
-                continue;
-            }
-            break;
-        }
 
+        while (true) {
+            String[][] temp = new String[data.length + 1][101];
+            for (int i = 0; i < data.length; i++) {
+                System.arraycopy(data[i], 0, temp[i], 0, 101);
+            }
+            data=temp;
+            System.out.print("Please, input the number of group.\n ~");
+            data[data.length - 1][1] = stringInput();
+            System.out.print("Please, input the surname of student.\n ~");
+            data[data.length - 1][2] = stringInput();
+            for (int i = 2; i <= 51; i++) {
+                System.out.print("Do you want to add student's mark, y/n?\n ~");
+                if (stringInput().equals("y")) {
+                    System.out.print("Please type a number of lesson (1-50)\n ~");
+                    number = intInput();
+                    System.out.print("Please, type a mark.\n ~");
+                    data[data.length - 1][1 + number] = stringInput();
+                } else {
+                    break;
+                }
+            }
+            for (int i = 52; i <= 101; i++) {
+                System.out.print("Do you want to add student's visits, y/n?\n ~");
+                if (stringInput().equals("y")) {
+                    System.out.print("Please type a number of lesson (1-50)\n ~");
+                    number = intInput();
+                    System.out.print("Please, type if he was present.\n ~");
+                    data[data.length - 1][51 + number] = stringInput();
+                } else {
+                    break;
+                }
+            }
+            System.out.print("Would you like to add another student, y/n?\n ~");
+            if (stringInput().equals("n")){
+                break;
+            }
+        }
         return data;
+    }
+
+    private static int numberOfGroups(String data[][]) {
+        int quantity=0;
+        for (int i =1;i<data.length+1;i++){
+            for (String[] j : data) {
+                if (j[1].equals(Integer.toString(i))) {
+                    quantity++;
+                    break;
+                }
+            }
+        }
+        return quantity;
     }
 
     private static int intInput() {
@@ -64,7 +99,7 @@ public class Students {
         try {
             value = input.nextInt();
         } catch (Exception e) {
-            System.out.print("Please, enter number in correct form.\n~ ");
+            System.out.print("Please, enter number in correct form.\n ~");
             return intInput();
         }
         return value;
