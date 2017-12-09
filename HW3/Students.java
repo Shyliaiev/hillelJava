@@ -9,23 +9,28 @@ public class Students {
     public static void main(String[] args) {
         int number;
         String[][] Group;
-        Group = new String [0][101];
-        while (true){
+        Group = new String[5][101];
+        while (true) {
             System.out.print("What do you want to do:\n 1. Add new student.\n 2. Remove student." +
-                    "\n 3. Exit \n~");
-            number=intInput();
+                    "\n 3. Print\n 4. Exit \n~");
+            number = intInput();
             switch (number) {
                 case 1:
-                    System.out.println("You have "+Group.length+" students in "+numberOfGroups(Group)+" groups.");
+                    System.out.println("You have " + Group.length + " students in " + numberOfGroups(Group) + " groups.");
                     Group = newStudent(Group);
                     System.out.println("Operation successful.");
                     break;
                 case 2:
-                    System.out.print("You have "+Group.length+" group(s). To which one do you want to add student?\n~ ");
-                    //Group = removeStudent(Group);
+                    System.out.print("You have " + Group.length + " group(s). To which one do you want to add student?\n~ ");
+                    Group = removeStudent(Group);
                     System.out.println("Operation successful.");
                     break;
                 case 3:
+                    System.out.println("You have " + Group.length + " students in " + numberOfGroups(Group) + " groups." +
+                            " Which one do you want to print?");
+                    printGroup(Group);
+                    break;
+                case 4:
                     System.out.println("Program stopped by user.");
                     System.exit(1);                         //выход из программы
                     break;
@@ -45,7 +50,7 @@ public class Students {
             for (int i = 0; i < data.length; i++) {
                 System.arraycopy(data[i], 0, temp[i], 0, 101);
             }
-            data=temp;
+            data = temp;
             System.out.print("Please, input the number of group.\n ~");
             data[data.length - 1][1] = stringInput();
             System.out.print("Please, input the surname of student.\n ~");
@@ -73,16 +78,47 @@ public class Students {
                 }
             }
             System.out.print("Would you like to add another student, y/n?\n ~");
-            if (stringInput().equals("n")){
+            if (stringInput().equals("n")) {
                 break;
             }
         }
         return data;
     }
 
+    private static String[][] removeStudent(String data[][]) {
+        String number;
+        String surname;
+        int numberString = 0;
+        String[][] newData = new String[data.length - 1][101];
+        System.out.println("Please enter the number of group.");
+        number = stringInput();
+        System.out.println("Please enter the surname of student you want to remove.");
+        surname = stringInput();
+        for (String[] i : data) {
+            if (i[1].equals(number) && i[2].equals(surname)) {
+                break;
+            }
+            numberString++;
+        }
+        System.arraycopy(data, 0, newData, 0, numberString);
+        System.arraycopy(data, numberString + 1, newData, numberString, data.length - numberString);
+        data = newData;
+        return data;
+    }
+
+    private static void printGroup(String data[][]) {
+        String number;
+        number = stringInput();
+        for (String[] i : data) {
+            if (i[1].equals(number)) {
+                System.out.println(i[2]);
+            }
+        }
+    }
+
     private static int numberOfGroups(String data[][]) {
-        int quantity=0;
-        for (int i =1;i<data.length+1;i++){
+        int quantity = 0;
+        for (int i = 1; i < data.length + 1; i++) {
             for (String[] j : data) {
                 if (j[1].equals(Integer.toString(i))) {
                     quantity++;
