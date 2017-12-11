@@ -41,12 +41,12 @@ public class StudentsApplication {
                     group[groupNumberInt].addStudents();
                     break;
                 case 3:
-                    /////ДОДЕЛАТЬ!!!! хреново ловит ввод
                     int j = 0;
                     print(group);
                     System.out.print("Please, enter the name of group, from which you want to delete student.\n~");
+                    temporary=stringInput();
                     for (Group i : group) {
-                        if (i.name.equals(stringInput())) {
+                        if (i.name.equals(temporary)) {
                             group[j].students = group[j].deleteStudents(group[j].students);
                             break;
                         }
