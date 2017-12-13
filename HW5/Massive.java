@@ -1,36 +1,33 @@
-// +add         добавляем в массив
-// +contains    проверяем, есть ли инт в массиве
+// +add         добавляем в массив int в самый конец, расширяя массив
+// +contains    проверяем, есть ли int в массиве
 // +get         получаем значение по индексу
 // +addAll      добавляем массив в массив
 // +equals      проверяем, идентичны ли массивы
 // +clear       очищаем массив
 // +findIndexOf находим индекс элемента массива
 // +getSize     получаем размер массива
-// sort         сортировка массива
+// +sort        сортировка массива. Необходимо передать boolean ascending. Реализована сортировка по возрастанию и по убыванию
 
 public class Massive {
     private int[] data;
 
-    int[] add(int i) {
+    void add(int i) {
         int length = data.length;
         int[] temp = new int[length + 1];
         System.arraycopy(data, 0, temp, 0, length);
         temp[length] = i;
         data = temp;
-        return data;
     }
 
-    int[] addAll(int[] addition) {
+    void addAll(int[] addition) {
         int[] temporary = new int[data.length + addition.length];
         System.arraycopy(data, 0, temporary, 0, data.length);
         System.arraycopy(addition, 0, temporary, data.length, addition.length);
         data = temporary;
-        return data;
     }
 
-    int[] clear() {
+    void clear() {
         data = new int[0];
-        return data;
     }
 
     boolean contains(int i) {
@@ -73,7 +70,7 @@ public class Massive {
     }
 
     int get(int i) {
-        i = data[i - 1];
+        i = data[i];
         return i;
     }
 
@@ -86,11 +83,28 @@ public class Massive {
         return i;
     }
 
-    int[] sort(){
-        //сортировка перебором
+    void sort(boolean ascending) {
         int[] temp = new int[data.length];
-
-        return data;
+        System.arraycopy(data,0,temp,0,data.length);
+        for (int i = data.length-1; i >= 0; i--) {
+            for (int j=0; j<i;j++){
+                if (data[j]<data[j+1]) {
+                    temp[j]=data[j];
+                    temp[j+1]=data[j+1];
+                } else {
+                    temp[j]=data[j+1];
+                    temp[j+1]=data[j];
+                }
+                //Почему, когда я здесь писал data=temp, программа выдавала массив 1,1,2,2. При дебаггинге выплыло, что
+                //в любой момент времени, на любой итерации массивы были полностью идентичны.
+                System.arraycopy(temp,0,data,0,data.length);
+            }
+        }
+        if (!ascending) {
+            for (int i=0; i<data.length;i++) {
+                data[i]=temp[data.length-1-i];
+            }
+        }
     }
 
     int[] getData() {
@@ -99,12 +113,6 @@ public class Massive {
 
     void setData(int[] data) {
         this.data = data;
-    }
-
-    static String concat(String f, String g, String h) {
-        String result;
-        result=f+g+h;
-        return result;
     }
 }
 
