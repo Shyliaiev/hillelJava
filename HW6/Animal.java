@@ -11,6 +11,10 @@ abstract class Animal {
         this.color = color;
     }
 
+    public String speak() {
+        return ("Hello, ");
+    }
+
     public int getId() {
         return id;
     }

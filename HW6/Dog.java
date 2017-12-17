@@ -4,4 +4,7 @@ public class Dog extends Pet {
         super(id, age, weight, color, name, isVaccinated);
     }
 
+    public String speak() {
+        return (super.speak() + " Woof!");
+    }
 }

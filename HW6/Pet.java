@@ -8,6 +8,10 @@ public abstract class Pet extends Animal {
         this.isVaccinated = isVaccinated;
     }
 
+    public String speak() {
+        return (super.speak() + "my name is " + this.getName()+".");
+    }
+
     public String getName() {
         return name;
     }
