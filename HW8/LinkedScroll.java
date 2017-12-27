@@ -97,6 +97,11 @@ public class LinkedScroll implements Collection {
     public boolean remove(Object o) {
         Node temp = head;
         if (contains(o)) {
+            if (temp.data == o) {
+                head = temp.next;
+                size--;
+                return true;
+            }
             while (temp.next.data != o) {
                 temp = temp.next;
             }
@@ -131,7 +136,7 @@ public class LinkedScroll implements Collection {
             return false;
         }
         Object[] array = c.toArray();
-        for (Object i:array) {
+        for (Object i : array) {
             add(i);
         }
         return false;
@@ -139,11 +144,11 @@ public class LinkedScroll implements Collection {
 
     @Override
     public boolean removeAll(Collection c) {
-        if (isEmpty()||!containsAll(c)) {
+        if (isEmpty() || !containsAll(c)) {
             return false;
         }
         Object[] array = c.toArray();
-        for (Object i:array) {
+        for (Object i : array) {
             remove(i);
         }
         return false;
@@ -154,9 +159,11 @@ public class LinkedScroll implements Collection {
         if (isEmpty()) {
             return false;
         }
-        Object[] array = c.toArray();
-        for (Object i:array) {
-            remove(i);
+        Object[] array = toArray();
+        for (int i = 0; i < size; i++) {
+            if (!c.contains(array[i])) {
+                remove(array[i]);
+            }
         }
         return true;
     }

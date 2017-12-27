@@ -42,11 +42,14 @@ public class MainScroll {
 
         //Testing addAll()
         test.addAll(compare);
-        System.out.println(test.toString());//[1, Hello, 3, Hello, 2]
+        System.out.println(test.toString());//[1, Hello, 3, Hello, 3]
 
         //Testing removeAll()
         test.removeAll(compare);
-        System.out.println(compare.toString());
-        System.out.println(test.toString());
+        System.out.println(test.toString());//[1, Hello, 3]
+
+        //Testing retainAll()
+        test.retainAll(compare);
+        System.out.println(test.toString());//[Hello, 3]
     }
 }
