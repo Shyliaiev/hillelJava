@@ -2,201 +2,183 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class LinkedScroll implements Collection {
-    private LinkedScroll.Node head;
+
+    private static class Node {
+        private Object data;
+
+        private Node next = null;
+
+        private Node(Object data) {
+            this.data = data;
+        }
+    }
+
+    private Node head;
+
     private int size = 0;
 
-    public LinkedScroll() {
-    }
-
+    @Override
     public int size() {
-        return this.size;
+        return size;
     }
 
+    @Override
     public boolean isEmpty() {
-        return this.head == null;
+        return head == null;
     }
 
+    @Override
     public boolean contains(Object o) {
-        LinkedScroll.Node temp = this.head;
-
-        boolean result;
-        for(result = false; temp.next != null; temp = temp.next) {
+        Node temp = head;
+        boolean result = false;
+        while (temp.next != null) {
             if (temp.data == o) {
                 result = true;
                 break;
+            } else {
+                temp = temp.next;
             }
         }
-
         if (temp.data == o) {
             result = true;
         }
-
         return result;
     }
 
+    @Override
     public Iterator iterator() {
         return null;
     }
 
+    @Override
     public Object[] toArray() {
-        Object[] array = new Object[this.size()];
-        LinkedScroll.Node temp = this.head;
-        if (this.isEmpty()) {
+        Object[] array = new Object[size()];
+        Node temp = head;
+        if (isEmpty()) {
             return new Object[0];
-        } else {
-            for(int i = 0; i < this.size(); ++i) {
-                array[i] = temp.data;
-                temp = temp.next;
-            }
-
-            return array;
         }
+        for (int i = 0; i < size(); i++) {
+            array[i] = temp.data;
+            temp = temp.next;
+        }
+        return array;
     }
 
+    @Override
     public Object[] toArray(Object[] a) {
-        if (this.isEmpty()) {
+        //по идее в этом коде нет необходимости
+        if (isEmpty()) {
             a = new Object[0];
             return a;
-        } else {
-            a = this.toArray();
-            return a;
         }
+        //
+        a = toArray();
+        return a;
     }
 
+    @Override
     public boolean add(Object o) {
-        LinkedScroll.Node addition = new LinkedScroll.Node(o);
-        if (this.head == null) {
-            this.head = addition;
+        Node addition = new Node(o);
+        Node temp;
+        if (head == null) {
+            head = addition;
         } else {
-            LinkedScroll.Node temp;
-            for(temp = this.head; temp.next != null; temp = temp.next) {
-                ;
+            temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
             }
-
             temp.next = addition;
         }
-
-        ++this.size;
+        size++;
         return false;
     }
 
+    @Override
     public boolean remove(Object o) {
-        LinkedScroll.Node temp = this.head;
-        if (!this.contains(o)) {
-            return false;
-        } else {
-            while(temp.next.data != o) {
+        Node temp = head;
+        if (contains(o)) {
+            while (temp.next.data != o) {
                 temp = temp.next;
             }
-
             temp.next = temp.next.next;
-            --this.size;
+            size--;
             return true;
+        } else {
+            return false;
         }
     }
 
+    @Override
     public boolean containsAll(Collection c) {
-        if (this.isEmpty()) {
-            return false;
-        } else {
-            Object[] array = c.toArray();
-            boolean result = true;
-            Object[] var4 = array;
-            int var5 = array.length;
-
-            for(int var6 = 0; var6 < var5; ++var6) {
-                Object i = var4[var6];
-                if (!this.contains(i)) {
-                    result = false;
-                    break;
-                }
-            }
-
-            return result;
-        }
-    }
-
-    public boolean addAll(Collection c) {
-        if (this.isEmpty()) {
-            return false;
-        } else {
-            Object[] array = c.toArray();
-            Object[] var3 = array;
-            int var4 = array.length;
-
-            for(int var5 = 0; var5 < var4; ++var5) {
-                Object i = var3[var5];
-                this.add(i);
-            }
-
+        if (isEmpty()) {
             return false;
         }
-    }
-
-    public boolean removeAll(Collection c) {
-        if (!this.isEmpty() && this.containsAll(c)) {
-            Object[] array = c.toArray();
-            Object[] var3 = array;
-            int var4 = array.length;
-
-            for(int var5 = 0; var5 < var4; ++var5) {
-                Object i = var3[var5];
-                this.remove(i);
+        Object[] array = c.toArray();
+        boolean result = true;
+        for (Object i : array) {
+            if (contains(i)) {
+                continue;
             }
-
-            return false;
-        } else {
-            return false;
+            result = false;
+            break;
         }
-    }
-
-    public boolean retainAll(Collection c) {
-        if (this.isEmpty()) {
-            return false;
-        } else {
-            Object[] array = c.toArray();
-            Object[] var3 = array;
-            int var4 = array.length;
-
-            for(int var5 = 0; var5 < var4; ++var5) {
-                Object i = var3[var5];
-                if (!this.contains(i)) {
-                    this.remove(i);
-                }
-            }
-
-            return true;
-        }
-    }
-
-    public void clear() {
-        this.head = null;
-        this.size = 0;
-    }
-
-    public String toString() {
-        Object[] arr = this.toArray();
-        String result = "[";
-        if (this.isEmpty()) {
-            result = null;
-        } else {
-            for(int i = 0; i < this.size() - 1; ++i) {
-                result = result + arr[i] + ", ";
-            }
-
-            result = result + arr[this.size() - 1] + "]";
-        }
-
         return result;
     }
 
-    private static class Node {
-        private Object data;
-        private LinkedScroll.Node next;
-
-        private Node(Object data) {
-            this.next = null;
-            this.data = data;
+    @Override
+    public boolean addAll(Collection c) {
+        if (isEmpty()) {
+            return false;
         }
+        Object[] array = c.toArray();
+        for (Object i:array) {
+            add(i);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection c) {
+        if (isEmpty()||!containsAll(c)) {
+            return false;
+        }
+        Object[] array = c.toArray();
+        for (Object i:array) {
+            remove(i);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection c) {
+        if (isEmpty()) {
+            return false;
+        }
+        Object[] array = c.toArray();
+        for (Object i:array) {
+            remove(i);
+        }
+        return true;
+    }
+
+    @Override
+    public void clear() {
+        this.head = null;
+        size = 0;
+    }
+
+    @Override
+    public String toString() {
+        Object[] arr = toArray();
+        String result = "[";
+        if (isEmpty()) {
+            result = null;
+        } else {
+            for (int i = 0; i < size() - 1; i++) {
+                result += (arr[i] + ", ");
+            }
+            result += arr[size() - 1] + "]";
+        }
+        return result;
     }
 }
