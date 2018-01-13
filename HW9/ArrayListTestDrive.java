@@ -1,7 +1,4 @@
-import org.omg.PortableInterceptor.INACTIVE;
-
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class ArrayListTestDrive {
     public static void main(String[] args) {
