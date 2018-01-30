@@ -20,7 +20,9 @@ public class Animals {
         System.out.println(repa.speak());
 
         Animal vasya = new Cat(1,2,3,"blue", "Valera",false);
+        Animal vasya1 = new Cat(1,2,3,"blue", "Semen",false);
         System.out.println(vasya.speak());
+        System.out.println(vasya1.speak());
     }
 
 }
