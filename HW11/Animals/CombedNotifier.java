@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CombedNotifier implements Observed {
-    private static List<Observer> observers = new ArrayList<Observer>();
+    private static List<Observer> observers = new ArrayList<>();
 
 
     @Override

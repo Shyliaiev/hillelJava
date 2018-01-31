@@ -14,7 +14,7 @@ public abstract class Animal {
         number = id;
     }
 
-    public void setDate() {
+    void setDate() {
         Date date = new Date();
         this.date = date.toString();
     }
@@ -27,7 +27,7 @@ public abstract class Animal {
         return number;
     }
 
-    public boolean getIll() {
+    private boolean getIll() {
         return ill;
     }
 
@@ -37,13 +37,13 @@ public abstract class Animal {
         new IllNotifier().notifyObservers(getId(), getIll(), getDate());
     }
 
-    public boolean getHungry() {
+    boolean getHungry() {
         return hungry;
     }
 
     public void setHungry(boolean hungry) {
         this.hungry = hungry;
-        setDate();
-        new HungryNotifier().notifyObservers(getId(), getHungry(), getDate());
+//        setDate();
+//        new HungryNotifier().notifyObservers(getId(), getHungry(), getDate());
     }
 }

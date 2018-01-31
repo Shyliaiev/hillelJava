@@ -1,4 +1,4 @@
 package Animals;
 
-public class Elephant extends Wild {
+class Elephant extends Wild {
 }

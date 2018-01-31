@@ -3,14 +3,20 @@ package Animals;
 public abstract class Pet extends Animal {
     private boolean combed;
     
-    public boolean getCombed() {
+    private boolean getCombed() {
         return combed;
     }
 
     public void setCombed(boolean combed) {
-        combed = true;
         this.combed = combed;
         setDate();
         new CombedNotifier().notifyObservers(getId(), getCombed(), getDate());
+    }
+
+    @Override
+    public void setHungry(boolean hungry) {
+        super.setHungry(hungry);
+        setDate();
+        new PetHungryNotifier().notifyObservers(getId(), getHungry(), getDate());
     }
 }

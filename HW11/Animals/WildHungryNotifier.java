@@ -3,8 +3,8 @@ package Animals;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HungryNotifier implements Observed {
-    private static List<Observer> observers = new ArrayList<Observer>();
+public class WildHungryNotifier implements Observed {
+    private static List<Observer> observers = new ArrayList<>();
 
 
     @Override

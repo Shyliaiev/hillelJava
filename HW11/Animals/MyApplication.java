@@ -4,31 +4,51 @@ public class MyApplication {
     public static void main(String[] args) {
 
         IllNotifier illNotifier = new IllNotifier();
-        HungryNotifier hungryNotifier = new HungryNotifier();
+        WildHungryNotifier wildHungryNotifier = new WildHungryNotifier();
+        PetHungryNotifier petHungryNotifier = new PetHungryNotifier();
         CombedNotifier combedNotifier = new CombedNotifier();
 
-        Director Valera = new Director();
-        Vet Pasha = new Vet();
-        Caretaker Ivan = new Caretaker();
-        Barber Gennadiy = new Barber();
+        Director director = new Director("Petro");
+        Barber barber = new Barber("Sashko");
+        Caretaker caretaker1 = new Caretaker("Vasylko");
+        Caretaker caretaker2 = new Caretaker("Valerchik");
+        Vet vet = new Vet("Kolyan");
 
-        illNotifier.addObservers(Valera);
-        illNotifier.addObservers(Pasha);
+        illNotifier.addObservers(director);
+        illNotifier.addObservers(vet);
 
-        hungryNotifier.addObservers(Valera);
-        hungryNotifier.addObservers(Pasha);
-        hungryNotifier.addObservers(Ivan);
+        wildHungryNotifier.addObservers(director);
+        wildHungryNotifier.addObservers(caretaker1);
+        wildHungryNotifier.addObservers(vet);
 
-        combedNotifier.addObservers(Valera);
-        combedNotifier.addObservers(Gennadiy);
+        petHungryNotifier.addObservers(director);
+        petHungryNotifier.addObservers(caretaker1);
+        petHungryNotifier.addObservers(vet);
 
+        combedNotifier.addObservers(director);
+        combedNotifier.addObservers(barber);
 
-        Cat cat1 = new Cat();
+        Cat cat = new Cat();
+        Dog dog = new Dog();
+        Lion lion = new Lion();
         Elephant elephant = new Elephant();
-        cat1.setIll(false);
-        cat1.setHungry(false);
-        cat1.setCombed(true);
-        elephant.setIll(false);
 
+        System.out.println("Кот заболел");
+        cat.setIll(true);
+        System.out.println("Кота расчесали");
+        cat.setCombed(true);
+        System.out.println("Пёс проголодался");
+        dog.setHungry(true);
+        System.out.println("Лев заболел");
+        lion.setIll(true);
+        System.out.println("Слон проголодался");
+        elephant.setHungry(true);
+        System.out.println("На работу вышел второй смотритель");
+        wildHungryNotifier.removeObservers(caretaker1);
+        wildHungryNotifier.addObservers(caretaker2);
+        System.out.println("Проголодался кот");
+        cat.setHungry(true);
+        System.out.println("Лев проголодался");
+        elephant.setHungry(true);
     }
 }
