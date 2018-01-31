@@ -1,6 +1,5 @@
 package Animals;
 
 public interface Observer {
-    void handleEvent(int id, String date, boolean isIll, boolean isHungry, boolean isCombed);
-    void handleEvent(int id, String date, boolean isIll, boolean isHungry);
+    void handleEvent(int id, boolean bool, String type, String date);
 }

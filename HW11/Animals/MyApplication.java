@@ -1,22 +1,24 @@
 package Animals;
 
 public class MyApplication {
-    private static int id;
-
-    public void setId() {
-        id++;
-    }
-
     public static void main(String[] args) {
+
+        IllNotifier illNotifier = new IllNotifier();
+        HungryNotifier hungryNotifier = new HungryNotifier();
+        CombedNotifier combedNotifier = new CombedNotifier();
+
+        Director Valera = new Director();
+
+        illNotifier.addObservers(Valera);
+        hungryNotifier.addObservers(Valera);
+        combedNotifier.addObservers(Valera);
+
         Cat cat1 = new Cat();
-        Cat cat2 = new Cat();
-
-        cat1.addObservers(new Director());
-        cat2.addObservers(new Director());
-
-        cat1.setHungry(true);
-        cat2.setCombed(true);
-        cat1.setIll(true);
+        Elephant elephant = new Elephant();
         cat1.setIll(false);
+        cat1.setHungry(false);
+        cat1.setCombed(true);
+        elephant.setIll(false);
+
     }
 }
