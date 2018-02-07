@@ -1,10 +1,33 @@
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public class MyMap<K,V> implements Map<K,V> {
+public class MyMap<K, V> implements Map<K, V> {
     private int size;
-    Entry[] entries = new Entry[10];
+    LinkedList<Entry>[] entries = new LinkedList[10];
+
+    private class Entry<K, V> implements Map.Entry<K, V> {
+        K key;
+        V value;
+
+        public Entry(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        @Override
+        public K getKey() {
+            return key;
+        }
+
+        @Override
+        public V getValue() {
+            return value;
+        }
+
+        @Override
+        public V setValue(V value) {
+            return this.value = value;
+        }
+    }
 
     @Override
     public int size() {
@@ -33,8 +56,17 @@ public class MyMap<K,V> implements Map<K,V> {
 
     @Override
     public V put(K key, V value) {
-
-        return null;
+        Entry<K, V> temp = new Entry<>(key, value);
+        int hash = (Math.abs(temp.hashCode()) % 31);
+        if (entries[hash] == null) {
+            LinkedList<Entry> addition = new LinkedList<>();
+            addition.add(temp);
+            entries[hash]=addition;
+        } else {
+            entries[hash].add(temp);
+        }
+        size++;
+        return value;
     }
 
     @Override
@@ -63,7 +95,7 @@ public class MyMap<K,V> implements Map<K,V> {
     }
 
     @Override
-    public Set<Entry<K, V>> entrySet() {
+    public Set<Map.Entry<K, V>> entrySet() {
         return null;
     }
 }
