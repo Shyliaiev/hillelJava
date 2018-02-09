@@ -52,14 +52,7 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean isEmpty() {
-        boolean result = true;
-        for (LinkedList<Entry<K, V>> o : entries) {
-            if (o != null) {
-                result = false;
-                break;
-            }
-        }
-        return result;
+        return size() == 0;
     }
 
     @Override
@@ -161,10 +154,10 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        Set<Map.Entry<K, V>> set = new TreeSet<>();
-        for (LinkedList<Entry<K, V>> o : this.entries) {
-            set.addAll(o);
-        }
-        return set;
+//        Set<Map.Entry<K, V>> set = new TreeSet<>();
+//        for (LinkedList<Entry<K, V>> o : this.entries) {
+//            set.addAll(o);
+//        }
+        return null;
     }
 }
