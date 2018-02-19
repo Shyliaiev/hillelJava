@@ -9,7 +9,7 @@ public class StudentsApplication {
             System.out.print("What do you want to do?\n  +1.  Add new group.\n  +2.  Add new student.\n  +3.  Delete student\n  " +
                     "+4.  Find in group.\n  +5.  Clear all data.\n  6.  Groups concatenation.\n  7.  Sort group.\n  8.  " +
                     "Look if one group is in another.\n  9.  Look if groups are equal.\n  +10. Print.\n  +11. " +
-                    "Exit.\n~");
+                    "Exit.\n  12. Save to file\n  13. Load from file\n~");
             number = intInput();
             switch (number) {
                 case 1:
@@ -99,6 +99,10 @@ public class StudentsApplication {
                 case 11:
                     System.out.println("Program stopped by user.");
                     System.exit(1);                         //выход из программы
+                    break;
+                case 12:
+                    new Save().Save(group);
+                    System.out.println("Saved successfully.");
                     break;
                 default:
                     System.out.println("You've entered not listed number.");
