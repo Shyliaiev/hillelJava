@@ -52,14 +52,7 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean isEmpty() {
-        boolean result = true;
-        for (LinkedList<Entry<K, V>> o : entries) {
-            if (o != null) {
-                result = false;
-                break;
-            }
-        }
-        return result;
+        return size() == 0;
     }
 
     @Override
@@ -87,7 +80,7 @@ public class MyMap<K, V> implements Map<K, V> {
         if (entries[hash] == null) return null;
         LinkedList<Entry<K, V>> temp = entries[hash];
         for (Entry<K, V> o : temp) {
-            if (o.getKey() == key) {
+            if (o.getKey().equals(key)) {
                 return o.getValue();
             } else {
                 return null;
@@ -120,6 +113,7 @@ public class MyMap<K, V> implements Map<K, V> {
             int hash = Math.abs(key.hashCode()) % 7;
             Entry<K, V> toRemove = new Entry<>((K) key, this.get(key));
             entries[hash].remove(toRemove);
+            size--;
             return this.get(key);
         } else {
             return null;
@@ -140,9 +134,11 @@ public class MyMap<K, V> implements Map<K, V> {
     @Override
     public Set<K> keySet() {
         Set<K> val = new TreeSet<>();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < entries[i].size(); j++) {
-                val.add(entries[i].get(j).getKey());
+        for (int i = 0; i < 10; i++) {
+            if (entries[i] != null) {
+                for (int j = 0; j < entries[i].size(); j++) {
+                    val.add(entries[i].get(j).getKey());
+                }
             }
         }
         return val;
@@ -152,8 +148,10 @@ public class MyMap<K, V> implements Map<K, V> {
     public Collection<V> values() {
         Collection<V> val = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            for (int j = 0; j < entries[i].size(); j++) {
-                val.add(entries[i].get(j).getValue());
+            if (entries[i] != null) {
+                for (int j = 0; j < entries[i].size(); j++) {
+                    val.add(entries[i].get(j).getValue());
+                }
             }
         }
         return val;
@@ -161,10 +159,10 @@ public class MyMap<K, V> implements Map<K, V> {
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        Set<Map.Entry<K, V>> set = new TreeSet<>();
-        for (LinkedList<Entry<K, V>> o : this.entries) {
-            set.addAll(o);
-        }
-        return set;
+//        Set<Map.Entry<K, V>> set = new TreeSet<>();
+//        for (LinkedList<Entry<K, V>> o : this.entries) {
+//            set.addAll(o);
+//        }
+        return null;
     }
 }
